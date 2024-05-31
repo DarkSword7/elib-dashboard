@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { LoaderCircle } from "lucide-react";
 
 const LoginPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -49,6 +50,7 @@ const LoginPage = () => {
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
             Enter your email below to login to your account.
+            {mutation.isPending && <div>Loading...</div>}
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -67,8 +69,15 @@ const LoginPage = () => {
             <Input ref={passwordRef} id="password" type="password" required />
           </div>
 
-          <Button onClick={handleLoginSubmit} className="w-full">
-            Sign in
+          <Button
+            onClick={handleLoginSubmit}
+            className="w-full flex items-center gap-2"
+            disabled={mutation.isPending}
+          >
+            <LoaderCircle
+              className={mutation.isPending ? "animate-spin" : "hidden"}
+            />
+            <span>Sign in</span>
           </Button>
 
           <div className="text-center text-sm">
