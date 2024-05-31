@@ -51,6 +51,11 @@ const LoginPage = () => {
           <CardDescription>
             Enter your email below to login to your account.
             {mutation.isPending && <div>Loading...</div>}
+            {mutation.isError && (
+              <div className="text-red-500 text-sm">
+                username or password is incorrect
+              </div>
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
