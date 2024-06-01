@@ -21,7 +21,13 @@ import { Input } from "@/components/ui/input";
 import useTokenStore from "@/Store";
 
 const DashboardLayout = () => {
-  const token = useTokenStore((state) => state.token);
+  const { token, setToken } = useTokenStore((state) => state);
+
+  const logout = () => {
+    console.log("Logging out");
+
+    setToken("");
+  };
 
   if (!token) {
     return <Navigate to="/auth/login" replace />;
@@ -90,7 +96,7 @@ const DashboardLayout = () => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
