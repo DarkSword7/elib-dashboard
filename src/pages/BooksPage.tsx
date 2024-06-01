@@ -2,7 +2,7 @@ import { getBooks } from "@/http/api";
 import { useQuery } from "@tanstack/react-query";
 
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal } from "lucide-react";
+import { CirclePlus, MoreHorizontal } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -48,17 +48,24 @@ const BooksPage = () => {
 
   return (
     <div>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href={"/dashboard/home"}>Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Books</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <div className="flex items-center justify-between">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href={"/dashboard/home"}>Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Books</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
+        <Button size={"sm"}>
+          <CirclePlus className="mr-2 h-4 w-4" />
+          <span>Add Book</span>
+        </Button>
+      </div>
 
       <Card className="mt-6">
         <CardHeader>
