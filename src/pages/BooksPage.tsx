@@ -37,6 +37,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Book } from "@/types";
+import { Link } from "react-router-dom";
 
 const BooksPage = () => {
   // Todo: add loading and error states
@@ -61,10 +62,12 @@ const BooksPage = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <Button size={"sm"}>
-          <CirclePlus className="mr-2 h-4 w-4" />
-          <span>Add Book</span>
-        </Button>
+        <Link to={"/dashboard/books/create"}>
+          <Button size={"sm"}>
+            <CirclePlus className="mr-2 h-4 w-4" />
+            <span>Add Book</span>
+          </Button>
+        </Link>
       </div>
 
       <Card className="mt-6">
