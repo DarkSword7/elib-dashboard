@@ -1,3 +1,4 @@
+import useTokenStore from "@/Store";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,13 +21,15 @@ const RegisterPage = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
+  const setToken = useTokenStore((state) => state.setToken);
 
   // Mutations
   const mutation = useMutation({
     mutationFn: register,
-    onSuccess: () => {
+    onSuccess: (response) => {
       // Invalidate and refetch
       console.log("Register Success");
+      setToken(response.data.accessToken);
       navigate("/dashboard/home");
     },
   });
