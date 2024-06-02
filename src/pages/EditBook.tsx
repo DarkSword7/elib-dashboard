@@ -1,5 +1,3 @@
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,10 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { CircleX, LoaderCircle, Save } from "lucide-react";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -28,9 +22,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createBook } from "@/http/api";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { editBook } from "@/http/api";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { CircleX, LoaderCircle, Save } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { z } from "zod";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -50,8 +50,10 @@ const formSchema = z.object({
   }, "Book PDF is required"),
 });
 
-const CreateBook = () => {
+const EditBook = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,12 +72,11 @@ const CreateBook = () => {
 
   // Mutations
   const mutation = useMutation({
-    mutationFn: createBook,
+    mutationFn: (data: FormData) => editBook(id || "", data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["books"],
       });
-      // Invalidate and refetch
 
       navigate("/dashboard/books");
     },
@@ -114,7 +115,7 @@ const CreateBook = () => {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Create</BreadcrumbPage>
+                  <BreadcrumbPage>Edit</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -138,9 +139,9 @@ const CreateBook = () => {
 
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle>Create a new Book</CardTitle>
+              <CardTitle>Edit the Book</CardTitle>
               <CardDescription>
-                Fill in the details below to create a new book
+                Make changes to the book details.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -223,4 +224,4 @@ const CreateBook = () => {
   );
 };
 
-export default CreateBook;
+export default EditBook;
