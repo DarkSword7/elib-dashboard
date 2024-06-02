@@ -6,7 +6,7 @@ export interface Author {
 export interface Book {
   _id: string;
   title: string;
-  description: string;
+  desc: string;
   genre: string;
   author: Author;
   coverImage: string;
