@@ -51,3 +51,7 @@ export const editBook = async (id: string, data: FormData) => {
     },
   });
 };
+
+export const deleteBook = async (id: string) => {
+  return api.delete(`/api/books/${id}`);
+};

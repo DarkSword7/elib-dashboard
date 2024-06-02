@@ -4,7 +4,7 @@ export interface Author {
 }
 
 export interface Book {
-  _id: number;
+  _id: string;
   title: string;
   description: string;
   genre: string;
