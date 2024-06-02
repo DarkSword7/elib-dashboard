@@ -47,6 +47,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Book } from "@/types";
 import { Link } from "react-router-dom";
 
@@ -72,6 +73,96 @@ const BooksPage = () => {
   const deleteBookHandler = (bookId: string) => {
     mutation.mutate(bookId);
   };
+  // Add Loading Skeleton from Shadcn UI
+  if (isLoading) {
+    return (
+      <div>
+        <div className="flex items-center justify-between">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href={"/dashboard/home"}>Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Books</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
+          <Link to={"/dashboard/books/create"}>
+            <Button size={"sm"}>
+              <CirclePlus className="mr-2 h-4 w-4" />
+              <span>Add Book</span>
+            </Button>
+          </Link>
+        </div>
+
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Books</CardTitle>
+            <CardDescription>
+              Here you can manage all your books
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="hidden w-[100px] sm:table-cell">
+                    <span className="sr-only">Image</span>
+                  </TableHead>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Genre</TableHead>
+                  <TableHead className="hidden md:table-cell">Author</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Created at
+                  </TableHead>
+                  <TableHead>
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {[...Array(10)].map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="hidden sm:table-cell">
+                      <Skeleton
+                        className="aspect-square rounded-md object-cover"
+                        height="64"
+                        width="64"
+                      />
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      <Skeleton className="w-20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="w-20" />
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <Skeleton className="w-20" />
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <Skeleton className="w-20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="w-20" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter>
+            <div className="text-xs text-muted-foreground">
+              Showing <strong>1-10</strong> of <strong>32</strong> products
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between">
