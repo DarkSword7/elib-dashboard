@@ -127,11 +127,7 @@ const BooksPage = () => {
                 {[...Array(10)].map((_, index) => (
                   <TableRow key={index}>
                     <TableCell className="hidden sm:table-cell">
-                      <Skeleton
-                        className="aspect-square rounded-md object-cover"
-                        height="64"
-                        width="64"
-                      />
+                      <Skeleton className="aspect-square rounded-md object-cover" />
                     </TableCell>
                     <TableCell className="font-medium">
                       <Skeleton className="w-20" />
